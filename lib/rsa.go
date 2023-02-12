@@ -1,6 +1,8 @@
 package lib
 
-import "math/big"
+import (
+	"math/big"
+)
 
 type Primes struct {
 	P int64
@@ -50,10 +52,7 @@ func Encrypt(message *big.Int, publicKey PublicKey) *big.Int {
 	return new(big.Int).Exp(message, publicKey.E, publicKey.N)
 }
 
-func Decrypt(encryptedMsg *big.Int, privateKey PrivateKey) (*big.Int, bool) {
-	euler := privateKey.N.Euler()
-	exp := new(big.Int).Sub(euler, new(big.Int).SetInt64(2))
-	d := new(big.Int).Exp(privateKey.E, exp, euler)
-
-	return new(big.Int).Exp(encryptedMsg, d, privateKey.N.GetN()), true
+func Decrypt(encryptedMsg *big.Int, privateKey PrivateKey) *big.Int {
+	d := new(big.Int).ModInverse(privateKey.E, privateKey.N.Euler())
+	return new(big.Int).Exp(encryptedMsg, d, privateKey.N.GetN())
 }
