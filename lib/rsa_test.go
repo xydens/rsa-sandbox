@@ -7,8 +7,8 @@ import (
 
 func TestEncodeAndDecodeInt(t *testing.T) {
 	primes := Primes{
-		P: 6,
-		Q: 11,
+		P: big.NewInt(6),
+		Q: big.NewInt(11),
 	}
 	privateKey := PrivateKey{
 		N: primes,

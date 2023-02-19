@@ -5,30 +5,18 @@ import (
 )
 
 type Primes struct {
-	P int64
-	Q int64
+	P *big.Int
+	Q *big.Int
 }
 
 func (receiver Primes) GetN() *big.Int {
-	p := new(big.Int)
-	p.SetInt64(receiver.P)
-
-	q := new(big.Int)
-	q.SetInt64(receiver.Q)
-
-	z := new(big.Int)
-	return z.Mul(p, q)
+	return new(big.Int).Mul(receiver.P, receiver.Q)
 }
 
 func (receiver Primes) Euler() *big.Int {
-	p := new(big.Int)
-	p.SetInt64(receiver.P - 1)
-
-	q := new(big.Int)
-	q.SetInt64(receiver.Q - 1)
-
-	z := new(big.Int)
-	return z.Mul(p, q)
+	p := new(big.Int).Sub(receiver.P, big.NewInt(1))
+	q := new(big.Int).Sub(receiver.Q, big.NewInt(1))
+	return new(big.Int).Mul(p, q)
 }
 
 type PrivateKey struct {
